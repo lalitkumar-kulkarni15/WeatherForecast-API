@@ -28,7 +28,7 @@ public class WethrFrcstCntrl {
 	}  
 	
 	@GetMapping("/v1/data")
-	@ApiOperation(value = "Get the average day and nightly temperature of 3 days.",
+	@ApiOperation(value = "Get the average day and nightly temperature daily for 3 consecutive days.",
 				  notes = "This API invokes the 3rd party API - https://openweathermap.org to fetch the weather forecast data i.e. temperature in degrees and pressure in hpa parameters.")
 	@ApiResponses(value = {@ApiResponse(code = 500, message = "Something went wrong in the service, please contact the system administrator - Email - lalitkulkarniofficial@gmail.com"),
 			               @ApiResponse(code = 200, message = "Weather forecast has been successfully fetched.") })
