@@ -33,7 +33,7 @@ public class RestClientSvcImpl implements IApiClient {
 			if(HttpStatus.UNAUTHORIZED.equals(httpStatus)) {
 				throw new UnauthorisedException("Unauthorised exception");
 			} else if (HttpStatus.NOT_FOUND.equals(httpStatus)) {
-				throw new DataNotFoundException("Data not found");
+				throw new DataNotFoundException("We couldnt find the data of the city you are looking for.");
 			} else {
 				throw new WeatherForecastException("Something went wrong with invoking the weather API.");
 			}

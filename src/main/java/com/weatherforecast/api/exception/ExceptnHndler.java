@@ -19,7 +19,7 @@ public class ExceptnHndler extends ResponseEntityExceptionHandler {
 	@Override
 	protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex,
 			HttpHeaders headers, HttpStatus status, WebRequest request) {
-
+  
 		final ErrorDetails errorDetails = new ErrorDetails(new Date(), "Validation Failed",
 				ex.getBindingResult().toString());
 		return new ResponseEntity<>(errorDetails, HttpStatus.BAD_REQUEST);

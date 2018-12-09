@@ -39,7 +39,7 @@ public class WethrFrcstCntrlIntTest {
 		
 		httpHeaders = new HttpHeaders();
 		HttpEntity<String> entity = new HttpEntity<String>(null, httpHeaders);
-		ResponseEntity<String> response = restTemplate.exchange(createURLWithPort("weather-forecast/v1/data/London/us",host,port),HttpMethod.GET, entity, String.class);
+		ResponseEntity<String> response = restTemplate.exchange(createURLWithPort("weather-forecast/v1/data?city=London&countryCd=us",host,port),HttpMethod.GET, entity, String.class);
 		Assert.assertEquals(HttpStatus.OK, response.getStatusCode());
 	}
 	
@@ -48,7 +48,7 @@ public class WethrFrcstCntrlIntTest {
 		
 		httpHeaders = new HttpHeaders();
 		HttpEntity<String> entity = new HttpEntity<String>(null, httpHeaders);
-		ResponseEntity<String> response = restTemplate.exchange(createURLWithPort("weather-forecast/v1/data/Delhi/in",host,port),HttpMethod.GET, entity, String.class);
+		ResponseEntity<String> response = restTemplate.exchange(createURLWithPort("weather-forecast/v1/data?city=Delhi&countryCd=in",host,port),HttpMethod.GET, entity, String.class);
 		Assert.assertEquals(HttpStatus.OK, response.getStatusCode());
 	}
 	
@@ -57,7 +57,7 @@ public class WethrFrcstCntrlIntTest {
 		
 		httpHeaders = new HttpHeaders();
 		HttpEntity<String> entity = new HttpEntity<String>(null, httpHeaders);
-		ResponseEntity<String> response = restTemplate.exchange(createURLWithPort("weather-forecast/v1/data/ABCD/in",host,port),HttpMethod.GET, entity, String.class);
+		ResponseEntity<String> response = restTemplate.exchange(createURLWithPort("weather-forecast/v1/data?city=ABCD&countryCd=in",host,port),HttpMethod.GET, entity, String.class);
 		Assert.assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
 	}
 	
@@ -66,7 +66,7 @@ public class WethrFrcstCntrlIntTest {
 		
 		httpHeaders = new HttpHeaders();
 		HttpEntity<String> entity = new HttpEntity<String>(null, httpHeaders);
-		ResponseEntity<String> response = restTemplate.exchange(createURLWithPort("weather-forecast/v1/data/ABCD/ABCD",host,port),HttpMethod.GET, entity, String.class);
+		ResponseEntity<String> response = restTemplate.exchange(createURLWithPort("weather-forecast/v1/data?city=ABCD&countryCd=ABCD",host,port),HttpMethod.GET, entity, String.class);
 		Assert.assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
 	}
 	
@@ -75,8 +75,8 @@ public class WethrFrcstCntrlIntTest {
 		
 		httpHeaders = new HttpHeaders();
 		HttpEntity<String> entity = new HttpEntity<String>(null, httpHeaders);
-		ResponseEntity<String> response = restTemplate.exchange(createURLWithPort("weather-forecast/v1/data",host,port),HttpMethod.GET, entity, String.class);
-		Assert.assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
+		ResponseEntity<String> response = restTemplate.exchange(createURLWithPort("weather-forecast/v1/data?",host,port),HttpMethod.GET, entity, String.class);
+		Assert.assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
 	}
 
 }
