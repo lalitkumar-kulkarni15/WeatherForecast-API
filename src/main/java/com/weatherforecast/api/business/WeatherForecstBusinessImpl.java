@@ -17,9 +17,9 @@ import com.weatherforecast.api.service.IWethrForecstSvc;
 /**
  * <p>This is the business implementation of the API. The rest endpoint refer {@code WethrFrcstCntrl} 
  * invokes this class to get the weather forecast metrics. This class is responsible for invoking the 
- * weather forecast service class and the data processor service in order to fetch the required weather
- * metrics to be sent to the rest endpoint {@code WethrFrcstCntrl} to fetch the weather metrics from the
- * {@link https://openweathermap.org/}.  </p>
+ * weather forecast service {@code OpnWeathrMpForecstSvcImpl } class and the data processor service 
+ * {@code WeathrDataProcessSvcImpl } in order to fetch the required weathermetrics to be sent to the 
+ * rest endpoint {@code WethrFrcstCntrl} to fetch the weather metrics from the {@link https://openweathermap.org/}.</p>
  * 
  * @author  Lalit Kulkarni
  * @since   08-12-2018
@@ -40,6 +40,13 @@ public class WeatherForecstBusinessImpl implements IWeathrForecstBusiness {
 	}
 	
 	/**
+	 * <p>This method primarily takes the city and country aliases as input from the rest controller 
+	 * {@code WethrFrcstCntrl} and invokes {@code OpnWeathrMpForecstSvcImpl } service to call the 5 
+	 * day weather data API which is exposed by {@link https://openweathermap.org/}. After receiving 
+	 * the 5 day weather data from the API , it then invokes {@code WeathrDataProcessSvcImpl} service
+	 * to process that data and filter out the weather metrics for 3 day and thus calculates the 
+	 * averages to send the response back to the rest end point.</p>
+	 * 
 	 * @author lalit kulkarni
 	 * @since  08-12-2018
 	 * @param  city  : The city alias of which the weather metrics is to be requested.
