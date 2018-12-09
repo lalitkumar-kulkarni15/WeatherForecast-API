@@ -1,0 +1,45 @@
+{
+    "invocatnDtTm": "2018-12-09T03:00:01.393",
+    "locDetails": {
+        "cityName": "London",
+        "cntryName": "us"
+    },
+    "weatherForecast": [
+        {
+            "date": "2018-12-09",
+            "dayAvgTemp": {
+                "temp": "273.34875",
+                "range": "06:00-18:00"
+            },
+            "nightlyAvgTemp": {
+                "temp": "274.41549999999995",
+                "range": "18:00-06:00"
+            },
+            "avgPressure": "993.0733333333334"
+        },
+        {
+            "date": "2018-12-10",
+            "dayAvgTemp": {
+                "temp": "272.48775",
+                "range": "06:00-18:00"
+            },
+            "nightlyAvgTemp": {
+                "temp": "274.3194",
+                "range": "18:00-06:00"
+            },
+            "avgPressure": "991.1466666666666"
+        },
+        {
+            "date": "2018-12-11",
+            "dayAvgTemp": {
+                "temp": "264.41375",
+                "range": "06:00-18:00"
+            },
+            "nightlyAvgTemp": {
+                "temp": "271.0594",
+                "range": "18:00-06:00"
+            },
+            "avgPressure": "997.1999999999999"
+        }
+    ]
+}
