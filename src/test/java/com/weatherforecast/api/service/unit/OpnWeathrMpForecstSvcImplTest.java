@@ -1,4 +1,4 @@
-package com.weatherforecast.api.service.ut;
+package com.weatherforecast.api.service.unit;
 
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;

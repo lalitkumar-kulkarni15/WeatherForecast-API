@@ -1,4 +1,4 @@
-package com.weatherforecast.api.service.it;
+package com.weatherforecast.api.service.integ;
 
 import java.io.File;
 import java.io.IOException;

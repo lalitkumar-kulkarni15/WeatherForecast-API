@@ -16,8 +16,11 @@ import com.weatherforecast.api.exception.WeatherForecastException;
 @Service(value = "restClientSvcImpl")
 public class RestClientSvcImpl implements IApiClient {
 
-	@Autowired
 	private RestTemplate restTemplate;
+	
+	public RestClientSvcImpl(RestTemplate restTemplate) {
+		this.restTemplate = restTemplate; 
+	}
 
 	private static final String PARAM = "parameters";
 

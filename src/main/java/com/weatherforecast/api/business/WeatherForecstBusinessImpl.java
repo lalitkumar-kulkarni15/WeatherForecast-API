@@ -39,7 +39,7 @@ public class WeatherForecstBusinessImpl implements IWeathrForecstBusiness {
 			LocationDetails locDetails = new LocationDetails(city, cntry);
 			weatherForecastResp.setLocDetails(locDetails);
 		}
-		
+		  
 		return weatherForecastResp;
 	}
 

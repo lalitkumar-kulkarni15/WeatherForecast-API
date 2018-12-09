@@ -1,4 +1,4 @@
-package com.weatherforecast.api.service.it;
+package com.weatherforecast.api.service.integ;
 
 import static org.junit.Assert.assertNotNull;
 import java.io.IOException;
