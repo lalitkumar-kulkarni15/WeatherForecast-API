@@ -16,7 +16,7 @@ URL : http://localhost:9067/weather-forecast/v1/data?city=Pune&countryCd=in
 
 Apart from the URL you will have to add appropriate header ex : Accept : application/json. in the request.
 
-There are currently sufficient test cases ( Integration test cases + unit test cases ) which has code coverage of around 89.4 % . I will keep on adding the Junits to make it more better.
+There are currently sufficient test cases ( Integration test cases + unit test cases ) which has code coverage of around 89.4 % . I will keep on adding the Junits to make it more better.The CodeCoverge.png file contains the snapshot of the code coverge metrics.
 
 Please feel free to use this API / extend it and n case you have any suggestions to improove the quality of the code please do let me know.
 
