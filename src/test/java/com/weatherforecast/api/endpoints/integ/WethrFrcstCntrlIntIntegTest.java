@@ -1,4 +1,4 @@
-package com.weatherforecast.api.endpoints;
+package com.weatherforecast.api.endpoints.integ;
 
 import static com.weatherforecast.api.test.utils.ITestUtils.createURLWithPort;
 import org.json.JSONException;
@@ -16,12 +16,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
-import com.weatherforecast.api.main.WeathrFrcstAppMain;
+
+import com.weatherforecast.api.WeathrFrcstAppMain;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest( webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT,classes= {WeathrFrcstAppMain.class})
 @TestPropertySource(locations="classpath:test.properties")
-public class WethrFrcstCntrlIntTest {
+public class WethrFrcstCntrlIntIntegTest {
 	
 	@Autowired
 	private TestRestTemplate restTemplate;

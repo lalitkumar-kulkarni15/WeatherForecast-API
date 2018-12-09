@@ -34,11 +34,11 @@ public class WethrFrcstCntrl {
 			               @ApiResponse(code = 200, message = "Weather forecast has been successfully fetched.") })
 						   @ApiResponse(code = 400, message = "Bad input request.Please check the error description for more details.")
 	public ResponseEntity<WeatherForecastResp> fetchWethrFrecstParams(@RequestParam(value="city",required=true) final String cityNm,
-			@RequestParam(value="countryCd",required=true) final String cntryCd) throws  WeatherForecastException, DataNotFoundException, IOException, UnauthorisedException {
+			@RequestParam(value="countryCd",required=true) final String cntryCd) throws WeatherForecastException, DataNotFoundException, IOException, UnauthorisedException {
 		
 		final WeatherForecastResp weathrForecstResp = weathrForecstBusiness.getWeatherStats(cityNm, cntryCd);
 		return ResponseEntity.ok().body(weathrForecstResp);
-		
+		  
 	}
 
 }

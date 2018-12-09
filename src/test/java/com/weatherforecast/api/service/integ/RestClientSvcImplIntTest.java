@@ -17,10 +17,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import com.weatherforecast.api.WeathrFrcstAppMain;
 import com.weatherforecast.api.exception.DataNotFoundException;
 import com.weatherforecast.api.exception.UnauthorisedException;
 import com.weatherforecast.api.exception.WeatherForecastException;
-import com.weatherforecast.api.main.WeathrFrcstAppMain;
 import com.weatherforecast.api.service.IApiClient;
 
 @RunWith(SpringRunner.class)

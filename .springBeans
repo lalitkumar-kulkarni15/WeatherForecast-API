@@ -7,7 +7,7 @@
 	</configSuffixes>
 	<enableImports><![CDATA[false]]></enableImports>
 	<configs>
-		<config>java:com.weatherforecast.api.main.WeathrFrcstAppMain</config>
+		<config>java:com.weatherforecast.api.WeathrFrcstAppMain</config>
 	</configs>
 	<autoconfigs>
 	</autoconfigs>

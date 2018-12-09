@@ -14,7 +14,7 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import com.weatherforecast.api.main.WeathrFrcstAppMain;
+import com.weatherforecast.api.WeathrFrcstAppMain;
 import com.weatherforecast.api.service.IParser;
 
 @RunWith(SpringRunner.class)

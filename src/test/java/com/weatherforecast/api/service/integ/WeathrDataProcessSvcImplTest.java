@@ -14,8 +14,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.test.context.junit4.SpringRunner;
+
+import com.weatherforecast.api.WeathrFrcstAppMain;
 import com.weatherforecast.api.exception.WeatherForecastException;
-import com.weatherforecast.api.main.WeathrFrcstAppMain;
 import com.weatherforecast.api.model.WeatherForecastResp;
 import com.weatherforecast.api.service.IDataProcess;
 
