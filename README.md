@@ -20,8 +20,7 @@ There are currently sufficient test cases ( Integration test cases + unit test c
 
 The source code is scanned using sonarlint which is a static code analysis and code review tool.
 
-Please feel free to use this API / extend it and n case you have any suggestions to improove the quality of the code please do let me know.
-
+Please feel free to use this API / extend it and n case you have any suggestions to improove the quality of the code please do let me know.In case of any issues/ bugs found please open an issue and will tr to fix it as soon as possible.
 Thanks and Regards,
 
 Lalit
