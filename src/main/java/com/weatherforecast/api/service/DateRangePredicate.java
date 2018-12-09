@@ -9,7 +9,7 @@ import java.util.function.Predicate;
 public interface DateRangePredicate {
 
 	public static Predicate<LocalDateTime> isWithinDayRange(final String noOfDays) {
-
+  
 		Predicate<LocalDateTime> dateRangePredicate = dtTm -> {
 
 			List<LocalDate> listLocalDate = getElligibleDatesForRange(noOfDays);
