@@ -42,8 +42,6 @@ public class OpnWeathrMpForecstSvcImpl implements IWethrForecstSvc{
 		if(null!=wethrForecstDataResp.getBody() && !wethrForecstDataResp.getBody().isEmpty() && HttpStatus.OK.equals(wethrForecstDataResp.getStatusCode())) {  
 			
 			wethrForecstDataJsonResp = wethrForecstDataResp.getBody();
-			final HttpStatus httpStatus = wethrForecstDataResp.getStatusCode();
-			
 			return wethrForecstDataJsonResp;  
 			
 		} else {
