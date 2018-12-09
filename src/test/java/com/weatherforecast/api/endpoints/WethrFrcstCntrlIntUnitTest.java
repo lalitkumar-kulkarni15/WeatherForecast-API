@@ -31,7 +31,7 @@ import com.weatherforecast.api.model.WeatherForecastResp;
 
 @RunWith(SpringRunner.class)
 @WebMvcTest(WethrFrcstCntrl.class)
-public class TWethrFrcstCntrlIntUnitTest {
+public class WethrFrcstCntrlIntUnitTest {
 	
 	@Autowired
 	private MockMvc mockMvc;
