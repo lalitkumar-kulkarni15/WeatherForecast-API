@@ -6,7 +6,7 @@ The application connects to https://openweathermap.org for obtaining the weather
 
 The app is implemented using Spring boot framework, restfull API and uses JDK 1.8.
 
-The package structure is kept simple. - The flow goes like Http get request -> RestController -> Business -> Services -> (Invokes 3rd part weather) API. and back again. The flow starts with com.weatherforecast.api.endpoints.WethrFrcstCntrl which is a rest controller class which exposes the rest api.
+The package structure is kept simple. - The flow goes like Http get request -> RestController -> Business -> Services -> (Invokes 3rd part weather) API. and back again. The flow starts with com.weatherforecast.api.endpoints.WethrFrcstCntrl.java which is a rest controller class which exposes the rest api.
 
 Also as mentioned on the swagger specs, there currently exposed is a GET API with 2 parameters a) cityName b) country code.( Please refer the https://openweathermap.org for more details about the exact country codes and city names. In case you specify incorrect country names and city name then the required data will not be found and appropriate error code will be thrown. 
 
