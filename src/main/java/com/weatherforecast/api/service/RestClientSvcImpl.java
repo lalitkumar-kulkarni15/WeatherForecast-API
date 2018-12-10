@@ -1,6 +1,5 @@
 package com.weatherforecast.api.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -39,9 +38,9 @@ public class RestClientSvcImpl implements IApiClient {
 				throw new DataNotFoundException("We couldnt find the data of the city you are looking for.");
 			} else {
 				throw new WeatherForecastException("Something went wrong with invoking the weather API.");
-			}
+			}  
 			
-		}
+		}  
 		
 	}
 

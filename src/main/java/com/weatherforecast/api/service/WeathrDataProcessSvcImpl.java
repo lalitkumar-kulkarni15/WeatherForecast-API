@@ -35,7 +35,7 @@ public class WeathrDataProcessSvcImpl implements IDataProcess {
 		
 		Optional<String> json = Optional.ofNullable(jsonData);
 		
-		if(json.isPresent() && !json.get().isEmpty()) {
+		if(json.isPresent() && !json.get().isEmpty()) {  
 		
 			List<StatsDto> tempListDay = new ArrayList<>();
 			List<StatsDto> pressureListDay = new ArrayList<>();
