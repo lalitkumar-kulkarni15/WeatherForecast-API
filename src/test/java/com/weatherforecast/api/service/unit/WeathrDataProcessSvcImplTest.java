@@ -53,7 +53,7 @@ public class WeathrDataProcessSvcImplTest {
 
 		when(parser.parseData(Mockito.anyString())).thenReturn(jsonNode);
 		WeatherForecastResp weatherForecast = dataProcess.processWeathrDataTotAvg(jsonResp);
-		assertEquals("0.0", weatherForecast.getWeatherForecast().get(0).getAvgPressure());
+		assertEquals("NA", weatherForecast.getWeatherForecast().get(0).getAvgPressure());
 	}
 	
 	@Test()
@@ -62,7 +62,7 @@ public class WeathrDataProcessSvcImplTest {
 
 		when(parser.parseData(Mockito.anyString())).thenReturn(jsonNode);
 		WeatherForecastResp weatherForecast = dataProcess.processWeathrDataTotAvg(jsonResp);
-		assertEquals("0.0", weatherForecast.getWeatherForecast().get(0).getDayAvgTemp().getTemp());
+		assertEquals("NA", weatherForecast.getWeatherForecast().get(0).getDayAvgTemp().getTemp());
 	}
 	
 	@Test()
@@ -71,7 +71,7 @@ public class WeathrDataProcessSvcImplTest {
 
 		when(parser.parseData(Mockito.anyString())).thenReturn(jsonNode);
 		WeatherForecastResp weatherForecast = dataProcess.processWeathrDataTotAvg(jsonResp);
-		assertEquals("0.0", weatherForecast.getWeatherForecast().get(0).getNightlyAvgTemp().getTemp());
+		assertEquals("NA", weatherForecast.getWeatherForecast().get(0).getNightlyAvgTemp().getTemp());
 	}
 
 }

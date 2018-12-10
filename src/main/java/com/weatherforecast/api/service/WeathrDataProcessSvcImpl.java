@@ -106,23 +106,43 @@ public class WeathrDataProcessSvcImpl implements IDataProcess {
 	private WeatherForecast populateResponse(double tempAvgDay,double pressureAvg,
 			double tempAvgNight,LocalDate lclDt) {
 		
-		DayWeathrForecast dayWeatherForecast = new DayWeathrForecast(Double.toString(tempAvgDay),"06:00-18:00");
-		NightlyWeathrForecast nightlyWeatherForecast = new NightlyWeathrForecast(Double.toString(tempAvgNight),"18:00-06:00");
-		return new WeatherForecast(dayWeatherForecast,nightlyWeatherForecast,String.valueOf(pressureAvg),lclDt);
+		DayWeathrForecast dayWeatherForecast = null;
+		NightlyWeathrForecast nightlyWeatherForecast = null;
+		String pressure = null;
+		
+		if(tempAvgDay==0.00000) {
+			dayWeatherForecast = new DayWeathrForecast("NA","06:00-18:00");
+		} else {
+			dayWeatherForecast = new DayWeathrForecast(Double.toString(tempAvgDay),"06:00-18:00");
+		}
+		
+		if(tempAvgDay==0.00000) {
+			nightlyWeatherForecast = new NightlyWeathrForecast("NA","18:00-06:00");
+		} else {
+			nightlyWeatherForecast = new NightlyWeathrForecast(Double.toString(tempAvgNight),"18:00-06:00");
+		}
+		
+		if(pressureAvg==0.00000) {
+			pressure = "NA";
+		}else {
+			pressure = Double.toString(pressureAvg);
+		}
+		
+		return new WeatherForecast(dayWeatherForecast,nightlyWeatherForecast,pressure,lclDt);
 		
 	}
 	
 	private double calcAvgPressure(List<StatsDto> pressureListDay,LocalDate lclDt) {
 		return pressureListDay.stream().filter(i->i.getLocalDate().equals(lclDt)).collect(Collectors.toList())
-				.stream().map(a->a.getPressure()).mapToDouble(g->g).average().orElse(Double.valueOf("0").doubleValue());
+				.stream().map(a->a.getPressure()).mapToDouble(g->g).average().orElse(Double.valueOf("0.00000").doubleValue());
 	}
 	
 	private double calcAvgDayTemp(List<StatsDto> tempListDay,LocalDate lclDt) {
-		return tempListDay.stream().filter(i->i.getLocalDate().equals(lclDt)).collect(Collectors.toList()).stream().map(a->a.getTemp()).mapToDouble(g->g).average().orElse(Double.valueOf("0").doubleValue());
+		return tempListDay.stream().filter(i->i.getLocalDate().equals(lclDt)).collect(Collectors.toList()).stream().map(a->a.getTemp()).mapToDouble(g->g).average().orElse(Double.valueOf("0.00000").doubleValue());
 	}
 	
 	private double calcAvgNightlyTemp(List<StatsDto> tempListNightly,LocalDate lclDt) {
-		return tempListNightly.stream().filter(i->i.getLocalDate().equals(lclDt)).collect(Collectors.toList()).stream().map(a->a.getTemp()).mapToDouble(g->g).average().orElse(Double.valueOf("0").doubleValue());
+		return tempListNightly.stream().filter(i->i.getLocalDate().equals(lclDt)).collect(Collectors.toList()).stream().map(a->a.getTemp()).mapToDouble(g->g).average().orElse(Double.valueOf("0.00000").doubleValue());
 	}
 	
 	private StatsDto fetchTemp(JsonNode node) {
