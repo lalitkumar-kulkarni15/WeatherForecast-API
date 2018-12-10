@@ -30,6 +30,22 @@ public class WeathrDataProcessSvcImpl implements IDataProcess {
 		this.parser = parser;
 	}
 	
+	private static final String NO_OF_DAYS = "3";
+	
+	private static final String DATE_TXT_FIELD = "dt_txt";
+	
+	private static final String TEMP  = "temp";
+	
+	private static final String MAIN  = "main";
+	
+	private static final String PRESSURE  = "pressure";
+	
+	private static final String DT_TM_FRMT = "yyyy-MM-dd HH:mm:ss";
+	
+	private static final String NOT_AVAILABL = "NA";
+	
+	private static final String BASE_VAL = "0.00000";
+	
 	@Override
 	public WeatherForecastResp processWeathrDataTotAvg(final String jsonData) throws IOException, WeatherForecastException {
 		
@@ -49,12 +65,12 @@ public class WeathrDataProcessSvcImpl implements IDataProcess {
 				JsonNode node = jsonNodes.next();
 				LocalDateTime dateTme = getDtTmOfRecFromJSon(node);
 
-				if (isWithinDayRange("3").test(dateTme)) {
+				if (isWithinDayRange(NO_OF_DAYS).test(dateTme)) {
 					tempListDay.add(fetchTemp(node));
 					pressureListDay.add(fetchPressure(node));
 				}
 
-				if (isWithinNightlyRange("3").test(dateTme)) {
+				if (isWithinNightlyRange(NO_OF_DAYS).test(dateTme)) {
 					tempListNightly.add(fetchTemp(node));
 					pressureListNightly.add(fetchPressure(node));
 				}
@@ -78,15 +94,15 @@ public class WeathrDataProcessSvcImpl implements IDataProcess {
 	
 	private LocalDateTime getDtTmOfRecFromJSon(JsonNode node) {
 		
-		String dateTime = node.path("dt_txt").asText();
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+		String dateTime = node.path(DATE_TXT_FIELD).asText();
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern(DT_TM_FRMT);
 		return LocalDateTime.parse(dateTime, formatter);
 	}
 	
 	private WeatherForecastResp iterateForDatesAndPopResp(List<StatsDto> tempListDay
 			,List<StatsDto> pressureListDay,List<StatsDto> tempListNightly) {
 		
-		List<LocalDate> listLocalDate = getElligibleDatesForRange("3");
+		List<LocalDate> listLocalDate = getElligibleDatesForRange(NO_OF_DAYS);
 		WeatherForecastResp response = new WeatherForecastResp();
 		
 		for (LocalDate lclDt : listLocalDate) {
@@ -111,19 +127,19 @@ public class WeathrDataProcessSvcImpl implements IDataProcess {
 		String pressure = null;
 		
 		if(tempAvgDay==0.00000) {
-			dayWeatherForecast = new DayWeathrForecast("NA","06:00-18:00");
+			dayWeatherForecast = new DayWeathrForecast(NOT_AVAILABL,"06:00-18:00");
 		} else {
 			dayWeatherForecast = new DayWeathrForecast(Double.toString(tempAvgDay),"06:00-18:00");
 		}
 		
 		if(tempAvgDay==0.00000) {
-			nightlyWeatherForecast = new NightlyWeathrForecast("NA","18:00-06:00");
+			nightlyWeatherForecast = new NightlyWeathrForecast(NOT_AVAILABL,"18:00-06:00");
 		} else {
 			nightlyWeatherForecast = new NightlyWeathrForecast(Double.toString(tempAvgNight),"18:00-06:00");
 		}
 		
 		if(pressureAvg==0.00000) {
-			pressure = "NA";
+			pressure = NOT_AVAILABL;
 		}else {
 			pressure = Double.toString(pressureAvg);
 		}
@@ -134,25 +150,25 @@ public class WeathrDataProcessSvcImpl implements IDataProcess {
 	
 	private double calcAvgPressure(List<StatsDto> pressureListDay,LocalDate lclDt) {
 		return pressureListDay.stream().filter(i->i.getLocalDate().equals(lclDt)).collect(Collectors.toList())
-				.stream().map(a->a.getPressure()).mapToDouble(g->g).average().orElse(Double.valueOf("0.00000").doubleValue());
+				.stream().map(a->a.getPressure()).mapToDouble(g->g).average().orElse(Double.valueOf(BASE_VAL).doubleValue());
 	}
 	
 	private double calcAvgDayTemp(List<StatsDto> tempListDay,LocalDate lclDt) {
-		return tempListDay.stream().filter(i->i.getLocalDate().equals(lclDt)).collect(Collectors.toList()).stream().map(a->a.getTemp()).mapToDouble(g->g).average().orElse(Double.valueOf("0.00000").doubleValue());
+		return tempListDay.stream().filter(i->i.getLocalDate().equals(lclDt)).collect(Collectors.toList()).stream().map(a->a.getTemp()).mapToDouble(g->g).average().orElse(Double.valueOf(BASE_VAL).doubleValue());
 	}
 	
 	private double calcAvgNightlyTemp(List<StatsDto> tempListNightly,LocalDate lclDt) {
-		return tempListNightly.stream().filter(i->i.getLocalDate().equals(lclDt)).collect(Collectors.toList()).stream().map(a->a.getTemp()).mapToDouble(g->g).average().orElse(Double.valueOf("0.00000").doubleValue());
+		return tempListNightly.stream().filter(i->i.getLocalDate().equals(lclDt)).collect(Collectors.toList()).stream().map(a->a.getTemp()).mapToDouble(g->g).average().orElse(Double.valueOf(BASE_VAL).doubleValue());
 	}
 	
 	private StatsDto fetchTemp(JsonNode node) {
 
 		StatsDto stats = null;
 		
-		if (node.path("dt_txt").asText() != null) {
-			String temp = node.path("main").path("temp").asText();
-			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-			LocalDateTime dateTme = LocalDateTime.parse(node.path("dt_txt").asText(), formatter);
+		if (node.path(DATE_TXT_FIELD).asText() != null) {
+			String temp = node.path(MAIN).path(TEMP).asText();
+			DateTimeFormatter formatter = DateTimeFormatter.ofPattern(DT_TM_FRMT);
+			LocalDateTime dateTme = LocalDateTime.parse(node.path(DATE_TXT_FIELD).asText(), formatter);
 			stats = new StatsDto(dateTme.toLocalDate(), Double.parseDouble(temp), 0);
 			return stats;
 		}
@@ -165,10 +181,10 @@ public class WeathrDataProcessSvcImpl implements IDataProcess {
 		
 		StatsDto stats = null;
 
-		if (node.path("dt_txt").asText() != null) {
-			String pressure = node.path("main").path("pressure").asText();
-			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-			LocalDateTime dateTme = LocalDateTime.parse(node.path("dt_txt").asText(), formatter);
+		if (node.path(DATE_TXT_FIELD).asText() != null) {
+			String pressure = node.path(MAIN).path(PRESSURE).asText();
+			DateTimeFormatter formatter = DateTimeFormatter.ofPattern(DT_TM_FRMT);
+			LocalDateTime dateTme = LocalDateTime.parse(node.path(DATE_TXT_FIELD).asText(), formatter);
 			stats = new StatsDto(dateTme.toLocalDate(), 0, Double.parseDouble(pressure));
 			return stats;
 		}
