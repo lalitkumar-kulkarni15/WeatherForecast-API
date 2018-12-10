@@ -1,6 +1,7 @@
 package com.weatherforecast.api.service.integ;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 import java.util.Arrays;
 import java.util.Optional;
@@ -38,7 +39,23 @@ public class RestClientSvcImplIntTest {
 	private String weatherForecastURLLondon;
 	
 	@Test
-	public void invokeGetResource_ReturnWeathrParamsSuccessfullyTest() throws UnauthorisedException, DataNotFoundException, WeatherForecastException  {
+	public void invokeGetResource_ReturnWeathrParamsVerifiesHttpOkTest() throws UnauthorisedException, DataNotFoundException, WeatherForecastException  {
+		
+		final HttpHeaders httpHeaders = new HttpHeaders();
+		httpHeaders.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
+		httpHeaders.setContentType(MediaType.APPLICATION_JSON);
+		httpHeaders.add("x-api-key",apiKey);
+		
+		final Optional<ResponseEntity<String>> apiResponse = Optional.of(apiClient.invokeGetResource(weatherForecastURLLondon,httpHeaders));
+		if(apiResponse.isPresent()) {
+			final HttpStatus apiResponseStatusCode = apiResponse.get().getStatusCode();
+			assertEquals(HttpStatus.OK, apiResponseStatusCode);
+		}
+		
+	}
+	
+	@Test
+	public void invokeGetResource_ReturnWeathrParamsVerifiesNonNullRespTest() throws UnauthorisedException, DataNotFoundException, WeatherForecastException  {
 		
 		final HttpHeaders httpHeaders = new HttpHeaders();
 		httpHeaders.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
@@ -48,8 +65,7 @@ public class RestClientSvcImplIntTest {
 		final Optional<ResponseEntity<String>> apiResponse = Optional.of(apiClient.invokeGetResource(weatherForecastURLLondon,httpHeaders));
 		if(apiResponse.isPresent()) {
 			final String apiResponseJson = apiResponse.get().getBody();
-			final HttpStatus apiResponseStatusCode = apiResponse.get().getStatusCode();
-			assertEquals(HttpStatus.OK, apiResponseStatusCode);
+			assertNotNull(apiResponseJson);
 		}
 		
 	}
