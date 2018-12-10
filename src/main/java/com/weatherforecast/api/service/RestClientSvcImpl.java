@@ -12,6 +12,13 @@ import com.weatherforecast.api.exception.DataNotFoundException;
 import com.weatherforecast.api.exception.UnauthorisedException;
 import com.weatherforecast.api.exception.WeatherForecastException;
 
+/**
+ * <p>This class has a responsibility of invoking the third party rest API to fetch the weather forecast metrics</p>
+ * 
+ * @author  lalitkumar kulkarni
+ * @since   08-12-2018
+ * @version 1.0
+ */
 @Service(value = "restClientSvcImpl")
 public class RestClientSvcImpl implements IApiClient {
 
