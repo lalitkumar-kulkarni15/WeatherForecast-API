@@ -12,6 +12,14 @@ import com.weatherforecast.api.exception.UnauthorisedException;
 import com.weatherforecast.api.exception.WeatherForecastException;
 import com.weatherforecast.api.model.WethrForecastReq;
 
+/**
+ * <p>This class has a responsibility of invoking the weather API to get the weather metrics to get the </p>
+ * weather data in json format , converts to java object and then sends it back to the rest controller 
+ * {@code WethrFrcstCntrl}
+ * @author  lalitkumar kulkarni
+ * @since   08-12-2018
+ * @version 1.0
+ */
 @Service
 public class OpnWeathrMpForecstSvcImpl implements IWethrForecstSvc{
 	
