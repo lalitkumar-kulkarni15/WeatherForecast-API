@@ -15,6 +15,13 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 @Service
 public class JsonParserSvcImpl implements IParser {
 
+	/**
+	 * This method converts the json string to json node object for furthur processing.
+	 * 
+	 * @author lalitkumar kulkarni
+	 * @since 08-12-2018
+	 * @version 1.0
+	 */
 	public JsonNode parseData(final String data) throws IOException {
 
 		ObjectMapper objectMapper = new ObjectMapper();

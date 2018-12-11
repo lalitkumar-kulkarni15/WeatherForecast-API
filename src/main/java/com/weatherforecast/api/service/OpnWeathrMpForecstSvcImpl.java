@@ -16,6 +16,7 @@ import com.weatherforecast.api.model.WethrForecastReq;
  * <p>This class has a responsibility of invoking the weather API to get the weather metrics to get the </p>
  * weather data in json format , converts to java object and then sends it back to the rest controller 
  * {@code WethrFrcstCntrl}
+ * 
  * @author  lalitkumar kulkarni
  * @since   08-12-2018
  * @version 1.0
@@ -35,29 +36,48 @@ public class OpnWeathrMpForecstSvcImpl implements IWethrForecstSvc{
 		this.apiClient = apiClient;
 	}
 
+	/**
+	 * This method is responsible to invoke the weather api usin the rest client
+	 * and send the response back to the business layer in json string format. 
+	 * 
+	 * @author  lalitkumar kulkarni
+	 * @since   08-12-2018
+	 * @version 1.0
+	 * @param   WethrForecastReq This object contains the city name and country.
+	 * @return  String The actual json string response after invokin the weather api.
+	 */
 	@Override
-	public String fetchWhtrFrecstParams(final WethrForecastReq wethrFrescReqDto) throws DataNotFoundException, UnauthorisedException, WeatherForecastException {
-		
-		
+	public String fetchWhtrFrecstParams(final WethrForecastReq wethrFrescReqDto)
+			throws DataNotFoundException, UnauthorisedException, WeatherForecastException {
+
 		String wethrForecstDataJsonResp = null;
 
 		final String uri = createRestUrI(wethrFrescReqDto.getCityNm(), wethrFrescReqDto.getCntryCd(),
 				wethrFrescReqDto.getRespCntntTyp());
 		final HttpHeaders httpHeaders = getHttpHeaders();
 		ResponseEntity<String> wethrForecstDataResp = (apiClient.invokeGetResource(uri, httpHeaders));
-		
-		if(null!=wethrForecstDataResp.getBody() && !wethrForecstDataResp.getBody().isEmpty() && HttpStatus.OK.equals(wethrForecstDataResp.getStatusCode())) {  
-			
+
+		if (null != wethrForecstDataResp.getBody() && !wethrForecstDataResp.getBody().isEmpty()
+				&& HttpStatus.OK.equals(wethrForecstDataResp.getStatusCode())) {
+
 			wethrForecstDataJsonResp = wethrForecstDataResp.getBody();
-			return wethrForecstDataJsonResp;  
-			
+			return wethrForecstDataJsonResp;
+
 		} else {
 			throw new DataNotFoundException("API service returned blank response");
 		}
 		  
-		  
 	}
 	
+	/**
+	 * This method populates the http headers which are required for invoking the
+	 * rest api of weather forecast.
+	 * 
+	 * @author  lalitkumar kulkarni
+	 * @since   08-12-2018
+	 * @version 1.0
+	 * @return HttpHeaders Returns the http headers with x api key and media types.
+	 */
 	private HttpHeaders getHttpHeaders() {
 		
 		final HttpHeaders httpHeaders = new HttpHeaders();
@@ -67,6 +87,15 @@ public class OpnWeathrMpForecstSvcImpl implements IWethrForecstSvc{
 		return httpHeaders;
 	}
 	
+
+	/**
+	 * This method creates the uri of the rest api to be invoked.
+	 * 
+	 * @param  cityNm     City name for which the weather data is to be requested. 
+	 * @param  cntryNm    Country name of which city for which the weather data is to be requested.
+	 * @param  contentTyp Weather json or xml etc.
+	 * @return String     Returns the fully qualified restfull api uri.
+	 */
 	private String createRestUrI(final String cityNm,final String cntryNm,final String contentTyp) {
 		
 		final StringBuilder urlBuilder = new StringBuilder();
