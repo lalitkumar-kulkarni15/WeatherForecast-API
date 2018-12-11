@@ -57,6 +57,14 @@ public class WeathrDataProcessSvcImpl implements IDataProcess {
 	
 	private static final String BASE_VAL = "0.00000";
 	
+	/**
+	 * This method converts the input json string data to the {@code WeatherForecastResp} by calculating the temperature and
+	 * pressure averages.
+	 * 
+	 * @author lalitkumar kulkarni
+	 * @since 08-12-2018
+	 * @version 1.0
+	 */
 	@Override
 	public WeatherForecastResp processWeathrDataTotAvg(final String jsonData) throws IOException, WeatherForecastException {
 		
@@ -96,6 +104,14 @@ public class WeathrDataProcessSvcImpl implements IDataProcess {
 		}
 	}
 	
+	/**
+	 * This method parses the input json string which is received from the weather api 
+	 * and returns the iterator of the json node which is used for the further processing.
+	 * 
+	 * @param  jsonData The input json string which is received from the weather api
+	 * @return Iterator<JsonNode> The iterator of the json node which is used for the further processing
+	 * @throws IOException 
+	 */
 	private Iterator<JsonNode> getJsonNodeIterator(final String jsonData) throws IOException{
 		
 		JsonNode jsonNode = parser.parseData(jsonData);
@@ -103,6 +119,14 @@ public class WeathrDataProcessSvcImpl implements IDataProcess {
 		return jsonNodes;
 	}
 	
+	/**
+	 * This method converts the date time in the json node to {@code LocalDateTime } format
+	 * 
+	 * @param  node           The input json node which is created by parsing the json received
+	 *                        from the weather api.
+	 * @return LocalDateTime  This i sthe local date time in the {@code LocalDateTime} format 
+	 *                        converted from the input json node.
+	 */
 	private LocalDateTime getDtTmOfRecFromJSon(JsonNode node) {
 		
 		String dateTime = node.path(DATE_TXT_FIELD).asText();
@@ -110,6 +134,17 @@ public class WeathrDataProcessSvcImpl implements IDataProcess {
 		return LocalDateTime.parse(dateTime, formatter);
 	}
 	
+	/**
+	 * This method gets the 3 elligible dates starting from the current date for which the
+	 * temperature stats are to be returned back. It loops for each date , calculates the 
+	 * weather metrics i.e. day,night average temperature and pressure and sends back 
+	 * {@code WeatherForecastResp} 
+	 * 
+	 * @param  tempListDay        The average day temperature list.
+	 * @param  pressureListDay    The average pressure list.
+	 * @param  tempListNightly    The average nightly temperature list.
+	 * @return WeatherForecastResp The api response object.
+	 */
 	private WeatherForecastResp iterateForDatesAndPopResp(List<StatsDto> tempListDay
 			,List<StatsDto> pressureListDay,List<StatsDto> tempListNightly) {
 		
@@ -130,6 +165,17 @@ public class WeathrDataProcessSvcImpl implements IDataProcess {
 		return response;
 	}
 	
+	/**
+	 * This method populates the response to the api which contains the day temperature, nightly temperature and average pressure.
+	 * for 3 consecutive days.
+	 * 
+	 * @param  tempAvgDay      The average day temperature.
+	 * @param  pressureAvg     The average pressure for that particular date.
+	 * @param  tempAvgNight    The average nightly temperature.
+	 * @param  lclDt           The local date for which the metrics is to be calcuated.
+	 * @return WeatherForecast The response object which contains the average day temperature, nightly temperature 
+	 *                         and average pressure of 3 consecutive days.
+	 */
 	private WeatherForecast populateResponse(double tempAvgDay,double pressureAvg,
 			double tempAvgNight,LocalDate lclDt) {
 		
@@ -159,19 +205,52 @@ public class WeathrDataProcessSvcImpl implements IDataProcess {
 		
 	}
 	
+	/**
+	 * <p>This method uses the stream api to filter out the date time which fits into date time range and then
+	 * calculates the average pressure of the particular date. </p>
+	 * 
+	 * @param  pressureListDay The list of the pressures to be filtered out.
+	 * @param  lclDt  The local date.
+	 * @return double The average day pressure of the city calculated.
+	 */
 	private double calcAvgPressure(List<StatsDto> pressureListDay,LocalDate lclDt) {
 		return pressureListDay.stream().filter(i->i.getLocalDate().equals(lclDt)).collect(Collectors.toList())
 				.stream().map(a->a.getPressure()).mapToDouble(g->g).average().orElse(Double.valueOf(BASE_VAL).doubleValue());
 	}
 	
+	/**
+	 * <p>This method uses the stream api to filter out the date time which fits into the day date time range and then
+	 * calculates the average day temperature. </p>
+	 * 
+	 * @param  tempListDay The list of the temperatures to be filtered out.
+	 * @param  lclDt  The local date.
+	 * @return double The average day temperature of the city calculated.
+	 */
 	private double calcAvgDayTemp(List<StatsDto> tempListDay,LocalDate lclDt) {
 		return tempListDay.stream().filter(i->i.getLocalDate().equals(lclDt)).collect(Collectors.toList()).stream().map(a->a.getTemp()).mapToDouble(g->g).average().orElse(Double.valueOf(BASE_VAL).doubleValue());
 	}
 	
+	/**
+	 * <p>This method uses the stream api to filter out the date time which fits into the nightly date time range and then
+	 * calculates the average nightly temperature.</p> 
+	 * 
+	 * @param  tempListNightly The list of the temperatures to be filtered out.
+	 * @param  lclDt  The local date.
+	 * @return double The average nightly temperature of the city calculated.
+	 */
 	private double calcAvgNightlyTemp(List<StatsDto> tempListNightly,LocalDate lclDt) {
 		return tempListNightly.stream().filter(i->i.getLocalDate().equals(lclDt)).collect(Collectors.toList()).stream().map(a->a.getTemp()).mapToDouble(g->g).average().orElse(Double.valueOf(BASE_VAL).doubleValue());
 	}
 	
+	/**
+	 * <p>This method is responsible for extracting put the temperature of the city from the json node
+	 * object. </p>
+	 * 
+	 * @param  node     The JSON node object which is created by convertin the json strin 
+	 *                  fetched from the weather rest api.
+	 * @return StatsDto Contains the temperature info which is derieve from the json node object
+	 *                  which is fetche from the third party weather API.
+	 */
 	private StatsDto fetchTemp(JsonNode node) {
 
 		StatsDto stats = null;
@@ -188,6 +267,15 @@ public class WeathrDataProcessSvcImpl implements IDataProcess {
 		
 	}
 
+	/**
+	 * <p>This method is responsible for extracting put the pressure of the city from the json node
+	 * object. </p>
+	 * 
+	 * @param node      The JSON node object which is created by convertin the json strin 
+	 *                  fetched from the weather rest api.
+	 * @return StatsDto Contains the pressure info which is derieve from the json node object
+	 *                  which is fetche from the third party weather API.
+	 */
 	private StatsDto fetchPressure(JsonNode node) {
 		
 		StatsDto stats = null;
