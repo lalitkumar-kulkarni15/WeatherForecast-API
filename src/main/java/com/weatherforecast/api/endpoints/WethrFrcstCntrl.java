@@ -18,7 +18,7 @@ import io.swagger.annotations.ApiResponses;
 
 @RestController
 @RequestMapping("/weather-forecast")
-@Api(tags = "Weather forecast API", value = "Performs CRUD operations on the patient.")
+@Api(tags = "Weather forecast API", value = "Fetches th weather forecast for 3 consecutive days.")
 public class WethrFrcstCntrl {
 	
 	private IWeathrForecstBusiness weathrForecstBusiness;
