@@ -59,13 +59,17 @@ public class WeatherForecstBusinessImpl implements IWeathrForecstBusiness {
 	 */
 	public WeatherForecastResp getWeatherStats(final String city,final String cntry) throws DataNotFoundException, IOException, UnauthorisedException, WeatherForecastException {
 		
+		// Initialise the weather forecast request object by populating the city ,country nd content type.
 		WethrForecastReq wethrForecastReq = new WethrForecastReq(city,cntry,"json");
+		// Invoke the weather forecast service and fetch the weather metrics from the weather map api.
 		Optional<String> weathrApiResponse = Optional.of(weathrForecstSvc.fetchWhtrFrecstParams(wethrForecastReq));
 		WeatherForecastResp weatherForecastResp = null;
 		
 		if(!weathrApiResponse.get().isEmpty()) {
+			// Process the json response received from the weather map api and filter it out for 3 consecutive days.
 			weatherForecastResp = dataProcessor.processWeathrDataTotAvg(weathrApiResponse.get());
 			weatherForecastResp.setInvocatnDtTm(LocalDateTime.now());
+			// Populate the location details from the request and set it into the weather forecast response.
 			LocationDetails locDetails = new LocationDetails(city, cntry);
 			weatherForecastResp.setLocDetails(locDetails);
 		}
