@@ -36,7 +36,9 @@ public class WethrFrcstCntrl {
 	public ResponseEntity<WeatherForecastResp> fetchWethrFrecstParams(@RequestParam(value="city",required=true) final String cityNm,
 			@RequestParam(value="countryCd",required=true) final String cntryCd) throws WeatherForecastException, DataNotFoundException, IOException, UnauthorisedException {
 		
+		// Invoke the business layer by passing city and country and get the weather metrics. 
 		final WeatherForecastResp weathrForecstResp = weathrForecstBusiness.getWeatherStats(cityNm, cntryCd);
+		// Send http status code 200 OK along with the weather metrics.
 		return ResponseEntity.ok().body(weathrForecstResp);
 		  
 	}
