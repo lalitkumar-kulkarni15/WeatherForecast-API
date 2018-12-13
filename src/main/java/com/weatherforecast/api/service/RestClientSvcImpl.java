@@ -13,7 +13,8 @@ import com.weatherforecast.api.exception.UnauthorisedException;
 import com.weatherforecast.api.exception.WeatherForecastException;
 
 /**
- * <p>This class has a responsibility of invoking the third party rest API to fetch the weather forecast metrics</p>
+ * <p>This class has a responsibility of invoking the third party rest API to fetch the weather 
+ * forecast metrics</p>
  * 
  * @author  lalitkumar kulkarni
  * @since   08-12-2018
@@ -30,6 +31,18 @@ public class RestClientSvcImpl implements IApiClient {
 
 	private static final String PARAM = "parameters";
 
+	/**
+	 * This method is a utility method which invokes the get method of the 3rd party api
+	 * 
+	 * @author lalitkumar kulkarni
+	 * @since 08-12-2018
+	 * @version 1.0
+	 * @param uri The uri of the get method to be invoked.
+	 * @param HttpHeaders The http headers to be passed as part of the uri.
+	 * @throws UnauthorisedException This exception is thrown when the user is not authorised to invoke the api.
+	 * @throws DataNotFoundException This exception is thrown when the data is not found by the api.
+	 * @throws WeatherForecastException This exception is thrown when in case anything other than mentioned goes wrong in the api..
+	 */
 	public ResponseEntity<String> invokeGetResource(final String uri, final HttpHeaders httpHeaders) throws UnauthorisedException, DataNotFoundException, WeatherForecastException {
 
 		try {
