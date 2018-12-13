@@ -31,12 +31,12 @@ public class WeatherForecstBusinessImpl implements IWeathrForecstBusiness {
 	
 	private IWethrForecstSvc weathrForecstSvc;
 	
-	private IDataProcess dataProcessor;
+	private IDataProcess dataProcessSvc;
 	
 	@Autowired
 	public WeatherForecstBusinessImpl(final IWethrForecstSvc weathrForecstSvc,final IDataProcess dataProcessor) {
 		this.weathrForecstSvc = weathrForecstSvc;
-		this.dataProcessor = dataProcessor;
+		this.dataProcessSvc = dataProcessor;
 	}
 	
 	/**
@@ -67,7 +67,7 @@ public class WeatherForecstBusinessImpl implements IWeathrForecstBusiness {
 		
 		if(!weathrApiResponse.get().isEmpty()) {
 			// Process the json response received from the weather map api and filter it out for 3 consecutive days.
-			weatherForecastResp = dataProcessor.processWeathrDataTotAvg(weathrApiResponse.get());
+			weatherForecastResp = dataProcessSvc.processWeathrDataTotAvg(weathrApiResponse.get());
 			weatherForecastResp.setInvocatnDtTm(LocalDateTime.now());
 			// Populate the location details from the request and set it into the weather forecast response.
 			LocationDetails locDetails = new LocationDetails(city, cntry);
