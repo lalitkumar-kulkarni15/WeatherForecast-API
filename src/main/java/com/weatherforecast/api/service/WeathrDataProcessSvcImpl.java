@@ -11,7 +11,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.weatherforecast.api.exception.WeatherForecastException;
@@ -20,6 +19,7 @@ import com.weatherforecast.api.model.NightlyWeathrForecast;
 import com.weatherforecast.api.model.StatsDto;
 import com.weatherforecast.api.model.WeatherForecast;
 import com.weatherforecast.api.model.WeatherForecastResp;
+import com.weatherforecast.api.utils.WeatherFrecstUtils;
 
 /**
  * <p>This class has a responsibility of processing the json message which is fetched by invoking the 
@@ -41,7 +41,7 @@ public class WeathrDataProcessSvcImpl implements IDataProcess {
 		this.parser = parser;
 	}
 	
-	private static final String NO_OF_DAYS = "3";
+	private static final double NO_OF_DAYS = 3;
 	
 	private static final String DATE_TXT_FIELD = "dt_txt";
 	
@@ -55,7 +55,11 @@ public class WeathrDataProcessSvcImpl implements IDataProcess {
 	
 	private static final String NOT_AVAILABL = "NA";
 	
-	private static final String BASE_VAL = "0.00000";
+	private static final double BASE_VAL = 0.00000;
+	
+	private static final String DAY_TM = "06:00-18:00";
+	
+	private static final String NIGHT_TM = "18:00-06:00";
 	
 	/**
 	 * This method converts the input json string data to the {@code WeatherForecastResp} by calculating the temperature and
@@ -153,9 +157,9 @@ public class WeathrDataProcessSvcImpl implements IDataProcess {
 		
 		for (LocalDate lclDt : listLocalDate) {
 
-			double tempAvgDay = calcAvgDayTemp(tempListDay, lclDt);
-			double pressureAvg = calcAvgPressure(pressureListDay, lclDt);
-			double tempAvgNight = calcAvgNightlyTemp(tempListNightly, lclDt);
+			double tempAvgDay = WeatherFrecstUtils.calcAvgTemp(tempListDay, lclDt, BASE_VAL);
+			double pressureAvg = WeatherFrecstUtils.calcAvgPressure(pressureListDay, lclDt,BASE_VAL);
+			double tempAvgNight = WeatherFrecstUtils.calcAvgTemp(tempListNightly, lclDt, BASE_VAL);
 
 			WeatherForecast weatherForecast = populateResponse(tempAvgDay, pressureAvg, tempAvgNight, lclDt);
 			response.getWeatherForecast().add(weatherForecast);
@@ -183,19 +187,19 @@ public class WeathrDataProcessSvcImpl implements IDataProcess {
 		NightlyWeathrForecast nightlyWeatherForecast = null;
 		String pressure = null;
 		
-		if(tempAvgDay==0.00000) {
-			dayWeatherForecast = new DayWeathrForecast(NOT_AVAILABL,"06:00-18:00");
+		if(tempAvgDay==BASE_VAL) {
+			dayWeatherForecast = new DayWeathrForecast(NOT_AVAILABL,DAY_TM);
 		} else {
-			dayWeatherForecast = new DayWeathrForecast(Double.toString(tempAvgDay),"06:00-18:00");
+			dayWeatherForecast = new DayWeathrForecast(Double.toString(tempAvgDay),DAY_TM);
 		}
 		
-		if(tempAvgDay==0.00000) {
-			nightlyWeatherForecast = new NightlyWeathrForecast(NOT_AVAILABL,"18:00-06:00");
+		if(tempAvgDay==BASE_VAL) {
+			nightlyWeatherForecast = new NightlyWeathrForecast(NOT_AVAILABL,NIGHT_TM);
 		} else {
-			nightlyWeatherForecast = new NightlyWeathrForecast(Double.toString(tempAvgNight),"18:00-06:00");
+			nightlyWeatherForecast = new NightlyWeathrForecast(Double.toString(tempAvgNight),NIGHT_TM);
 		}
 		
-		if(pressureAvg==0.00000) {
+		if(pressureAvg==BASE_VAL) {
 			pressure = NOT_AVAILABL;
 		}else {
 			pressure = Double.toString(pressureAvg);
@@ -203,43 +207,6 @@ public class WeathrDataProcessSvcImpl implements IDataProcess {
 		
 		return new WeatherForecast(dayWeatherForecast,nightlyWeatherForecast,pressure,lclDt);
 		
-	}
-	
-	/**
-	 * <p>This method uses the stream api to filter out the date time which fits into date time range and then
-	 * calculates the average pressure of the particular date. </p>
-	 * 
-	 * @param  pressureListDay The list of the pressures to be filtered out.
-	 * @param  lclDt  The local date.
-	 * @return double The average day pressure of the city calculated.
-	 */
-	private double calcAvgPressure(List<StatsDto> pressureListDay,LocalDate lclDt) {
-		return pressureListDay.stream().filter(i->i.getLocalDate().equals(lclDt)).collect(Collectors.toList())
-				.stream().map(a->a.getPressure()).mapToDouble(g->g).average().orElse(Double.valueOf(BASE_VAL).doubleValue());
-	}
-	
-	/**
-	 * <p>This method uses the stream api to filter out the date time which fits into the day date time range and then
-	 * calculates the average day temperature. </p>
-	 * 
-	 * @param  tempListDay The list of the temperatures to be filtered out.
-	 * @param  lclDt  The local date.
-	 * @return double The average day temperature of the city calculated.
-	 */
-	private double calcAvgDayTemp(List<StatsDto> tempListDay,LocalDate lclDt) {
-		return tempListDay.stream().filter(i->i.getLocalDate().equals(lclDt)).collect(Collectors.toList()).stream().map(a->a.getTemp()).mapToDouble(g->g).average().orElse(Double.valueOf(BASE_VAL).doubleValue());
-	}
-	
-	/**
-	 * <p>This method uses the stream api to filter out the date time which fits into the nightly date time range and then
-	 * calculates the average nightly temperature.</p> 
-	 * 
-	 * @param  tempListNightly The list of the temperatures to be filtered out.
-	 * @param  lclDt  The local date.
-	 * @return double The average nightly temperature of the city calculated.
-	 */
-	private double calcAvgNightlyTemp(List<StatsDto> tempListNightly,LocalDate lclDt) {
-		return tempListNightly.stream().filter(i->i.getLocalDate().equals(lclDt)).collect(Collectors.toList()).stream().map(a->a.getTemp()).mapToDouble(g->g).average().orElse(Double.valueOf(BASE_VAL).doubleValue());
 	}
 	
 	/**

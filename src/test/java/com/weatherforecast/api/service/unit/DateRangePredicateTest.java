@@ -16,7 +16,7 @@ public class DateRangePredicateTest {
 	@Test
 	public void isWithinDayRange_returnsTrue() {
 		
-		Predicate<LocalDateTime> consumer = DateRangePredicate.isWithinDayRange("3");
+		Predicate<LocalDateTime> consumer = DateRangePredicate.isWithinDayRange(3);
 		LocalDateTime dateTm = LocalDateTime.of(LocalDate.now().getYear(), LocalDate.now().getMonth(), LocalDate.now().getDayOfMonth(), 12, 0);
 		boolean isWithinDayRange = consumer.test(dateTm);
 		assertTrue(isWithinDayRange);
@@ -25,7 +25,7 @@ public class DateRangePredicateTest {
 	@Test
 	public void isWithinDayRange_returnsFalse() {
 		
-		Predicate<LocalDateTime> consumer = DateRangePredicate.isWithinDayRange("3");
+		Predicate<LocalDateTime> consumer = DateRangePredicate.isWithinDayRange(3);
 		LocalDateTime dateTm = LocalDateTime.of(LocalDate.now().getYear(), LocalDate.now().getMonth(), LocalDate.now().getDayOfMonth(), 03, 0);
 		boolean isWithinDayRange = consumer.test(dateTm);
 		assertFalse(isWithinDayRange);
@@ -34,7 +34,7 @@ public class DateRangePredicateTest {
 	@Test
 	public void isWithinNightlyRange_returnsTrue() {
 		
-		Predicate<LocalDateTime> consumer = DateRangePredicate.isWithinNightlyRange("3");
+		Predicate<LocalDateTime> consumer = DateRangePredicate.isWithinNightlyRange(3);
 		LocalDateTime dateTm = LocalDateTime.of(LocalDate.now().getYear(), LocalDate.now().getMonth(), LocalDate.now().getDayOfMonth(), 00, 0);
 		boolean isWithinDayRange = consumer.test(dateTm.plusDays(1));
 		assertTrue(isWithinDayRange);
@@ -43,7 +43,7 @@ public class DateRangePredicateTest {
 	@Test
 	public void isWithinNightlyRange_returnsFalse() {
 		
-		Predicate<LocalDateTime> consumer = DateRangePredicate.isWithinNightlyRange("3");
+		Predicate<LocalDateTime> consumer = DateRangePredicate.isWithinNightlyRange(3);
 		LocalDateTime dateTm = LocalDateTime.of(LocalDate.now().getYear(), LocalDate.now().getMonth(), LocalDate.now().getDayOfMonth(), 15, 0);
 		boolean isWithinDayRange = consumer.test(dateTm.plusDays(1));
 		assertFalse(isWithinDayRange);

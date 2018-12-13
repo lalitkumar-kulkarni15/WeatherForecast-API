@@ -8,7 +8,7 @@ import java.util.function.Predicate;
 
 public interface DateRangePredicate {
 
-	public static Predicate<LocalDateTime> isWithinDayRange(final String noOfDays) {
+	public static Predicate<LocalDateTime> isWithinDayRange(final double noOfDays) {
   
 		Predicate<LocalDateTime> dateRangePredicate = dtTm -> {
 
@@ -36,7 +36,7 @@ public interface DateRangePredicate {
 		return dateRangePredicate;
 	}
 
-	public static Predicate<LocalDateTime> isWithinNightlyRange(final String noOfDays) {
+	public static Predicate<LocalDateTime> isWithinNightlyRange(final double noOfDays) {
 
 		Predicate<LocalDateTime> dateRangePredicate = dtTm -> {
 
