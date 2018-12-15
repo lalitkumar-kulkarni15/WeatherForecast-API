@@ -23,14 +23,17 @@ import com.weatherforecast.api.model.WeatherForecast;
 import com.weatherforecast.api.model.WeatherForecastResp;
 
 /**
- * <p>This class has a responsibility of processing the json message which is fetched by invoking the 
- *  weather API. It filters out the data as per the date range from the 5 days data which is present
- *  It biforgates the data according to the day and night timing range and then calculates the averages
- *  of the weather parameters like temperature and pressure and sends back to the business class 
- *  {@code WeatherForecstBusinessImpl}.</p>
+ * <p>
+ * This class has a responsibility of processing the json message which is
+ * fetched by invoking the weather API. It filters out the data as per the date
+ * range from the 5 days data which is present It biforgates the data according
+ * to the day and night timing range and then calculates the averages of the
+ * weather parameters like temperature and pressure and sends back to the
+ * business class {@code WeatherForecstBusinessImpl}.
+ * </p>
  * 
- * @author  lalitkumar kulkarni
- * @since   08-12-2018
+ * @author lalitkumar kulkarni
+ * @since 08-12-2018
  * @version 1.0
  */
 @Service

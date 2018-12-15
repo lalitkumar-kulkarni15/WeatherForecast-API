@@ -10,4 +10,8 @@ public class WeatherForecastException extends Exception {
 	public WeatherForecastException(final String message) {
 		super(message);
 	}
+	
+	public WeatherForecastException(Throwable th,final String message) {
+		super(message);
+	}
 }
