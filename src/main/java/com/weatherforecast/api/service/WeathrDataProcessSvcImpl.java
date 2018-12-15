@@ -2,6 +2,8 @@ package com.weatherforecast.api.service;
 
 import static com.weatherforecast.api.service.DateRangePredicate.isWithinDayRange;
 import static com.weatherforecast.api.service.DateRangePredicate.isWithinNightlyRange;
+import static com.weatherforecast.api.utils.WeatherFrecstUtils.calcAvgPressure;
+import static com.weatherforecast.api.utils.WeatherFrecstUtils.calcAvgTemp;
 import static com.weatherforecast.api.utils.WeatherFrecstUtils.getElligibleDatesForRange;
 import java.io.IOException;
 import java.time.LocalDate;
@@ -19,7 +21,6 @@ import com.weatherforecast.api.model.NightlyWeathrForecast;
 import com.weatherforecast.api.model.StatsDto;
 import com.weatherforecast.api.model.WeatherForecast;
 import com.weatherforecast.api.model.WeatherForecastResp;
-import com.weatherforecast.api.utils.WeatherFrecstUtils;
 
 /**
  * <p>This class has a responsibility of processing the json message which is fetched by invoking the 
@@ -157,9 +158,9 @@ public class WeathrDataProcessSvcImpl implements IDataProcess {
 		
 		for (LocalDate lclDt : listLocalDate) {
 
-			double tempAvgDay = WeatherFrecstUtils.calcAvgTemp(tempListDay, lclDt, BASE_VAL);
-			double pressureAvg = WeatherFrecstUtils.calcAvgPressure(pressureListDay, lclDt,BASE_VAL);
-			double tempAvgNight = WeatherFrecstUtils.calcAvgTemp(tempListNightly, lclDt, BASE_VAL);
+			double tempAvgDay =   calcAvgTemp(tempListDay, lclDt, BASE_VAL);
+			double pressureAvg =  calcAvgPressure(pressureListDay, lclDt,BASE_VAL);
+			double tempAvgNight = calcAvgTemp(tempListNightly, lclDt, BASE_VAL);
 
 			WeatherForecast weatherForecast = populateResponse(tempAvgDay, pressureAvg, tempAvgNight, lclDt);
 			response.getWeatherForecast().add(weatherForecast);

@@ -4,7 +4,6 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
-
 import com.weatherforecast.api.model.StatsDto;
 
 public interface WeatherFrecstUtils {
@@ -15,7 +14,6 @@ public interface WeatherFrecstUtils {
 	
 	public static List<LocalDate> getElligibleDatesForRange(double noOfDays) {
 		
-		//long noOfDayss = Long.parseLong((Double.toString(noOfDays)));
 		long noOfDayss = (long) noOfDays;
 		return IntStream.iterate(0, i -> i + 1)
 	      .limit(noOfDayss)
@@ -33,22 +31,18 @@ public interface WeatherFrecstUtils {
 	 */
 	public static double calcAvgPressure(List<StatsDto> pressuremetrcsDtlList,LocalDate lclDt,double baseValue) {
 		return pressuremetrcsDtlList.stream().filter(i->i.getLocalDate().equals(lclDt)).collect(Collectors.toList())
-				.stream().map(a->a.getPressure()).mapToDouble(g->g).average().orElse(baseValue);
+				.stream().map(StatsDto::getPressure).mapToDouble(g->g).average().orElse(baseValue);
 	}
 	
 	/**
 	 * <p>This method uses the stream api to filter out the date time which fits into the nightly date time range and then
-	 * calculates the average nightly temperature.</p> 
+	 * calculates the average temperature.</p> 
 	 * 
-	 * @param  tempListNightly The list of the temperatures to be filtered out.
+	 * @param  tempListThe list of the temperatures to be filtered out.
 	 * @param  lclDt  The local date.
-	 * @return double The average nightly temperature of the city calculated.
+	 * @return double The average temperature of the city calculated.
 	 */
-	/*public static double calcAvgTemp(List<StatsDto> tempMetricsDtlList,LocalDate lclDt,double baseValue) {
-		return tempMetricsDtlList.stream().filter(i->i.getLocalDate().equals(lclDt)).collect(Collectors.toList()).stream().map(a->a.getTemp()).mapToDouble(g->g).average().orElse(baseValue);
-	}*/
-	
 	public static double calcAvgTemp(List<StatsDto> tempListDay,LocalDate lclDt,double baseValue) {
-		return tempListDay.stream().filter(i->i.getLocalDate().equals(lclDt)).collect(Collectors.toList()).stream().map(a->a.getTemp()).mapToDouble(g->g).average().orElse(baseValue);
+		return tempListDay.stream().filter(i->i.getLocalDate().equals(lclDt)).collect(Collectors.toList()).stream().map(StatsDto::getTemp).mapToDouble(g->g).average().orElse(baseValue);
 	}
 }
