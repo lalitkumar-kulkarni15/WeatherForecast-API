@@ -1,5 +1,7 @@
 # WeatherForecast-API
 
+<b>What is this project about ?</b> 
+
 This project houses a restfull API to fetch the weather forecast parameters of all the cities in the world. It is implemented using Spring boot and restfull API. Please refer to the Swagger specs at http://localhost:9067/swagger-ui.html. At this URL you will know the structure of the GET request and the JSON response as well. You will also be able to hit the request from the swagger UI and play with it. The app is currently configured to run on the port 9067, however you are free to change it anytime you need by updating it in the application.properties file. 
 
 The application connects to https://openweathermap.org for obtaining the weather forecast for 3 days by invoking their API . It calculates the average of daily ( 06:00 - 18:00 ) and nightly (18:00 - 06:00) of the temperature in degree celcius and pressure in hpa. Thus in the response we can see the day average of city temperature ( from 6:00-18:00 ) and nightly ( 18:00-06:00 ) temperature average per day. for the next 3 consecutive days.  
