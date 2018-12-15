@@ -4,6 +4,7 @@ import java.io.IOException;
 import org.springframework.stereotype.Service;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import static com.weatherforecast.api.constants.IGenericConstants.LIST;
 
 /**
  * <p>This class has a responsibility of parsing the input json string message and convert it to the
@@ -26,7 +27,7 @@ public class JsonParserSvcImpl implements IParser {
 
 		ObjectMapper objectMapper = new ObjectMapper();
 		JsonNode rootNode = objectMapper.readTree(data);
-		return rootNode.path("list");
+		return rootNode.path(LIST);
 
 	}
 }

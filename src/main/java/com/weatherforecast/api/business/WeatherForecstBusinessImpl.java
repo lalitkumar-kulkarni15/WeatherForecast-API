@@ -13,6 +13,7 @@ import com.weatherforecast.api.model.WeatherForecastResp;
 import com.weatherforecast.api.model.WethrForecastReq;
 import com.weatherforecast.api.service.IDataProcess;
 import com.weatherforecast.api.service.IWethrForecstSvc;
+import static com.weatherforecast.api.constants.IGenericConstants.CONTENT_TYPE;
 
 /**
  * <p>This is the business implementation of the API. The rest endpoint refer {@code WethrFrcstCntrl} 
@@ -24,7 +25,6 @@ import com.weatherforecast.api.service.IWethrForecstSvc;
  * @author  Lalit Kulkarni
  * @since   08-12-2018
  * @version 1.0  
- * 
  */
 @Component  
 public class WeatherForecstBusinessImpl implements IWeathrForecstBusiness {
@@ -60,11 +60,11 @@ public class WeatherForecstBusinessImpl implements IWeathrForecstBusiness {
 	public WeatherForecastResp getWeatherStats(final String city,final String cntry) throws DataNotFoundException, IOException, UnauthorisedException, WeatherForecastException {
 		
 		// Initialise the weather forecast request object by populating the city ,country nd content type.
-		WethrForecastReq wethrForecastReq = new WethrForecastReq(city,cntry,"json");
+		final WethrForecastReq wethrForecastReq = new WethrForecastReq(city,cntry,CONTENT_TYPE);
 		// Invoke the weather forecast service and fetch the weather metrics from the weather map api.
-		Optional<String> weathrApiResponse = Optional.of(weathrForecstSvc.fetchWhtrFrecstParams(wethrForecastReq));
+		final Optional<String> weathrApiResponse = Optional.of(weathrForecstSvc.fetchWhtrFrecstParams(wethrForecastReq));
 		WeatherForecastResp weatherForecastResp = null;
-		
+		  
 		if(!weathrApiResponse.get().isEmpty()) {
 			// Process the json response received from the weather map api and filter it out for 3 consecutive days.
 			weatherForecastResp = dataProcessSvc.processWeathrDataTotAvg(weathrApiResponse.get());

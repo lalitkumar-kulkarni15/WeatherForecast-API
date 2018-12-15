@@ -11,6 +11,12 @@ import com.weatherforecast.api.exception.DataNotFoundException;
 import com.weatherforecast.api.exception.UnauthorisedException;
 import com.weatherforecast.api.exception.WeatherForecastException;
 import com.weatherforecast.api.model.WethrForecastReq;
+import static com.weatherforecast.api.constants.IGenericConstants.API_KEY;
+import static com.weatherforecast.api.constants.IGenericConstants.MODE;
+import static com.weatherforecast.api.constants.IGenericConstants.UNITS;
+import static com.weatherforecast.api.constants.IGenericConstants.COMMA_SEP;
+import static com.weatherforecast.api.constants.IGenericConstants.PARAM_VAR;
+
 
 /**
  * <p>This class has a responsibility of invoking the weather API to get the weather metrics to get the </p>
@@ -70,8 +76,8 @@ public class OpnWeathrMpForecstSvcImpl implements IWethrForecstSvc{
 	}
 	
 	/**
-	 * This method populates the http headers which are required for invoking the
-	 * rest api of weather forecast.
+	 * <p>This method populates the http headers which are required for invoking the
+	 * rest api of weather forecast.<p/>
 	 * 
 	 * @author  lalitkumar kulkarni
 	 * @since   08-12-2018
@@ -83,13 +89,13 @@ public class OpnWeathrMpForecstSvcImpl implements IWethrForecstSvc{
 		final HttpHeaders httpHeaders = new HttpHeaders();
 		httpHeaders.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
 		httpHeaders.setContentType(MediaType.APPLICATION_JSON);
-		httpHeaders.add("x-api-key",apiKey);
+		httpHeaders.add(API_KEY,apiKey);
 		return httpHeaders;
 	}
 	
 
 	/**
-	 * This method creates the uri of the rest api to be invoked.
+	 * <p>This method creates the uri of the rest api to be invoked.</p>
 	 * 
 	 * @param  cityNm     City name for which the weather data is to be requested. 
 	 * @param  cntryNm    Country name of which city for which the weather data is to be requested.
@@ -100,13 +106,13 @@ public class OpnWeathrMpForecstSvcImpl implements IWethrForecstSvc{
 		
 		final StringBuilder urlBuilder = new StringBuilder();
 		urlBuilder.append(weatherForecastURL);
-		urlBuilder.append("q=");
+		urlBuilder.append(PARAM_VAR);
 		urlBuilder.append(cityNm);
-		urlBuilder.append(",");
+		urlBuilder.append(COMMA_SEP);
 		urlBuilder.append(cntryNm);
-		urlBuilder.append("&mode=");
+		urlBuilder.append(MODE);
 		urlBuilder.append(contentTyp);
-		urlBuilder.append("&units=metric");
+		urlBuilder.append(UNITS);
 		return urlBuilder.toString();
 	}
 

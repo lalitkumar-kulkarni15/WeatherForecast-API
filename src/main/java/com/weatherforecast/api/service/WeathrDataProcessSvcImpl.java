@@ -21,6 +21,16 @@ import com.weatherforecast.api.model.NightlyWeathrForecast;
 import com.weatherforecast.api.model.StatsDto;
 import com.weatherforecast.api.model.WeatherForecast;
 import com.weatherforecast.api.model.WeatherForecastResp;
+import static com.weatherforecast.api.constants.IGenericConstants.NO_OF_DAYS;
+import static com.weatherforecast.api.constants.IGenericConstants.DATE_TXT_FIELD;
+import static com.weatherforecast.api.constants.IGenericConstants.DT_TM_FRMT;
+import static com.weatherforecast.api.constants.IGenericConstants.BASE_VAL;
+import static com.weatherforecast.api.constants.IGenericConstants.NOT_AVAILABL;
+import static com.weatherforecast.api.constants.IGenericConstants.DAY_TM;
+import static com.weatherforecast.api.constants.IGenericConstants.NIGHT_TM;
+import static com.weatherforecast.api.constants.IGenericConstants.MAIN;
+import static com.weatherforecast.api.constants.IGenericConstants.TEMP;
+import static com.weatherforecast.api.constants.IGenericConstants.PRESSURE;
 
 /**
  * <p>
@@ -44,26 +54,6 @@ public class WeathrDataProcessSvcImpl implements IDataProcess {
 	public WeathrDataProcessSvcImpl(IParser parser) {
 		this.parser = parser;
 	}
-	
-	private static final double NO_OF_DAYS = 3;
-	
-	private static final String DATE_TXT_FIELD = "dt_txt";
-	
-	private static final String TEMP  = "temp";
-	
-	private static final String MAIN  = "main";
-	
-	private static final String PRESSURE  = "pressure";
-	
-	private static final String DT_TM_FRMT = "yyyy-MM-dd HH:mm:ss";
-	
-	private static final String NOT_AVAILABL = "NA";
-	
-	private static final double BASE_VAL = 0.00000;
-	
-	private static final String DAY_TM = "06:00-18:00";
-	
-	private static final String NIGHT_TM = "18:00-06:00";
 	
 	/**
 	 * This method converts the input json string data to the {@code WeatherForecastResp} by calculating the temperature and

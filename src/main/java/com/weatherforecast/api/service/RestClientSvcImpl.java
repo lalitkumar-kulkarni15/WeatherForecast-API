@@ -11,6 +11,7 @@ import org.springframework.web.client.RestTemplate;
 import com.weatherforecast.api.exception.DataNotFoundException;
 import com.weatherforecast.api.exception.UnauthorisedException;
 import com.weatherforecast.api.exception.WeatherForecastException;
+import static com.weatherforecast.api.constants.IGenericConstants.PARAM;
 
 /**
  * <p>This class has a responsibility of invoking the third party rest API to fetch the weather 
@@ -29,7 +30,7 @@ public class RestClientSvcImpl implements IApiClient {
 		this.restTemplate = restTemplate; 
 	}
 
-	private static final String PARAM = "parameters";
+	
 
 	/**
 	 * <p>This method is a generic utility method which invokes the get method of the 3rd party api by passing the 
