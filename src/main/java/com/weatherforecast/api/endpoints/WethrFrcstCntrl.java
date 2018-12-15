@@ -1,20 +1,25 @@
 package com.weatherforecast.api.endpoints;
 
 import java.io.IOException;
+
 import javax.validation.Valid;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
+
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
 import com.weatherforecast.api.business.IWeathrForecstBusiness;
 import com.weatherforecast.api.exception.DataNotFoundException;
 import com.weatherforecast.api.exception.UnauthorisedException;
 import com.weatherforecast.api.exception.WeatherForecastException;
 import com.weatherforecast.api.model.WeatherForecastResp;
+
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -33,6 +38,7 @@ public class WethrFrcstCntrl {
 	}  
 	
 	@GetMapping("/v1/data")
+	@Cacheable(value="cacheWeatherForecast")
 	@ApiOperation(value = "Get the average day and nightly temperature daily for 3 consecutive days.",
 				  notes = "This API invokes the 3rd party API - https://openweathermap.org to fetch the weather "
 				  		+ "forecast data i.e. temperature in degrees and pressure in hpa parameters.")

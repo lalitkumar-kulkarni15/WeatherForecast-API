@@ -51,7 +51,7 @@ public class RestClientSvcImpl implements IApiClient {
 
 			HttpEntity<String> entity = new HttpEntity<>(PARAM, httpHeaders);
 			return restTemplate.exchange(uri, HttpMethod.GET, entity, String.class);
-
+			
 		} catch (HttpClientErrorException exception) {
 
 			HttpStatus httpStatus = exception.getStatusCode();
