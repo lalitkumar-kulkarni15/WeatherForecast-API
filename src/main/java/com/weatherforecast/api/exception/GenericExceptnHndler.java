@@ -14,7 +14,7 @@ import com.weatherforecast.api.model.ErrorDetails;
 
 @ControllerAdvice
 @RestController
-public class ExceptnHndler extends ResponseEntityExceptionHandler {
+public class GenericExceptnHndler extends ResponseEntityExceptionHandler {
 
 	@Override
 	protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex,
