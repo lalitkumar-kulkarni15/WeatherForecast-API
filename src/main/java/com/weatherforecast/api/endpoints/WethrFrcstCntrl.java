@@ -23,6 +23,7 @@ import io.swagger.annotations.ApiResponses;
 
 @Validated
 @RestController
+@CacheConfig(cacheNames = {"cacheWeatherForecast"})
 @RequestMapping("/weather-forecast")
 @Api(tags = "Weather forecast API", value = "Fetches the weather forecast for 3 consecutive days.")
 public class WethrFrcstCntrl {
