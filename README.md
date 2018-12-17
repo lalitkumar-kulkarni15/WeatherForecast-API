@@ -48,6 +48,11 @@ Currently the code coverage of the project is above 90%. I have also attached th
 
 <p>Please feel free to use this API / extend it and n case you have any suggestions to improove the quality of the code please do let me know.In case of any issues/ bugs found please open an issue and will tr to fix it as soon as possible.</p>
 
+<b>Caching</b>
+
+<p>Currently the get request is cached using caffeine and its configuration is placed in the application.properties file. The 
+timeout is currently set to 30 sec. However please feel free to update it as per requirement.</p>
+
 Thanks and Regards,  
 
 Lalit
